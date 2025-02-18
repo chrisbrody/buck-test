@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/buck-test/static/css/main.4225a568.css",
+    "main.js": "/buck-test/static/js/main.b24c6800.js",
+    "static/js/453.4c71647d.chunk.js": "/buck-test/static/js/453.4c71647d.chunk.js",
+    "index.html": "/buck-test/index.html",
+    "main.4225a568.css.map": "/buck-test/static/css/main.4225a568.css.map",
+    "main.b24c6800.js.map": "/buck-test/static/js/main.b24c6800.js.map",
+    "453.4c71647d.chunk.js.map": "/buck-test/static/js/453.4c71647d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4225a568.css",
+    "static/js/main.b24c6800.js"
+  ]
+}
