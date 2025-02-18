@@ -26,7 +26,7 @@ body {
 }
 
 .carousel-slide {
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   flex-shrink: 0;
   background-size: cover;
@@ -71,4 +71,13 @@ body {
   line-height: 1.6;
   text-align: center;
   max-width: 800px;
+}
+
+@media (max-width: 768px) { /* Adjust the `max-width` as needed */
+  .carousel-slide {
+    /* Override styles for mobile devices */
+    background-size: cover;
+    background-repeat: no-repeat;
+    max-height: 100vh;
+  }
 }
