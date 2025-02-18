@@ -6,6 +6,12 @@ const App = () => {
   const [isScrollingToReport, setIsScrollingToReport] = useState(false);
   const carouselRef = useRef(null);
   const reportRef = useRef(null);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+
+  // the required distance between touchStart and touchEnd to be considered a swipe
+  const minSwipeDistance = 50;
+
 
   const images = [
     {
@@ -37,6 +43,30 @@ const App = () => {
       large: 'https://placehold.co/1900x1200/2eac71/ffffff?text=IMG+7',
     },
   ];
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null) // otherwise the swipe is fired even with usual touch events
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const onTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX)
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+    if (isLeftSwipe || isRightSwipe)
+      console.log('Swipe detected.', { isLeftSwipe, isRightSwipe })
+    // add your conditional logic here
+    if (isLeftSwipe){
+      setCurrentSlide((prevSlide) => (prevSlide + 1) % totalSlides);
+    }
+    if(isRightSwipe){
+      setCurrentSlide((prevSlide) => (prevSlide - 1 + totalSlides) % totalSlides);
+    }
+
+  }
 
   const totalSlides = images.length;
 
@@ -70,14 +100,18 @@ const App = () => {
 
   return (
       <div className="app-container">
-        <div className="carousel-container" ref={carouselRef}>
+        <div className="carousel-container" ref={carouselRef}
+             onTouchStart={onTouchStart}
+             onTouchMove={onTouchMove}
+             onTouchEnd={onTouchEnd}
+        >
           {images.map((image, index) => (
               <div
                   key={index}
                   className={`carousel-slide ${index === currentSlide ? 'active' : ''}`}
                   style={{
                     backgroundImage: `url(${
-                        window.innerWidth < 768 ? images[index].small : images[index].large
+                        window.innerWidth < 768 ? image.small : image.large
                     })`,
                     transform: `translateX(-${currentSlide * 100}%)`,
                   }}
